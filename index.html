@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="//code.jquery.com/jquery.min.js"></script>
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+</head>
+
+<script>
+$(document).ready(function(){
+
+	var list = $('#list');
+
+	$('#Validar').click(function(){
+		
+		var t = $('#txtTest').val();
+		
+		if(t == '')
+		{
+			alert('O campo não pode estar vazio');
+			return;
+		}
+		
+		 $.ajax({
+			url : "json.php?p="+t,
+			dataType : "json",		
+			success : function(data){
+				console.log(data);
+				//alert(data['result']);
+				
+				if(data['result'] == 'ERROR')
+				{
+					alert('houve um error');
+				}
+				else
+				{
+					list.append('<li>'+data['result']+'</li>');
+				}
+				
+				
+			}
+		});
+	});
+});
+</script>
+<body>
+
+<br/>
+<br/>
+<div class='container'>
+	<div class='row'>
+		<div class='col-sm-10'>
+			<input type='text' id='txtTest' class='form-control'/>
+		</div>
+		<div class='col-sm-2'>
+		<span class='btn btn-success' id='Validar'>Validar</span>
+
+		</div>
+	</div>
+	
+	<div class='row'>
+		<ul id='list'>
+		</ul>
+	</div>
+</div>
+	
+</body>
+</html>
